@@ -1,7 +1,8 @@
 def build_image(){
-    sh "git clone https://github.com/shortrounddev/scalableSolution/"
-    sh "cd scalableSolution"
+    sh "git clone https://github.com/shortrounddev/scalableSolution/ ___scalableSolution"
+    sh "cd ___scalableSolution"
     sh "docker build -t frontend_image ."
+    sh "rm -rf ___scalableSolution"
 }
 
 def deploy_container(){
