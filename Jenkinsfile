@@ -1,4 +1,5 @@
 def build_image(){
+    sh "git clone https://github.com/shortrounddev/scalableSolution/"
     sh "docker build -t frontend_image ."
 }
 
