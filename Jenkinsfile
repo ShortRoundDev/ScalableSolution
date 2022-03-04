@@ -1,14 +1,31 @@
-pipeline {
-    agent {
-        node('fe1')
-        node('fe2')
-        node('fe3')
+def build_image(){
+    sh "docker build -t frontend_image ."
+}
+
+def deploy_container(){
+    sh "(docker stop frontend && docker container rm frontend) || true"
+    sh "docker run -d --name frontend frontend_image"
+}
+
+def run_on_all(func){
+    node('fe1'){
+        func()
     }
+    node('fe2'){
+        func()
+    }
+    node('fe3'){
+        func()
+    }
+}
+
+pipeline {
+    agent none
 
     stages {
         stage('Build') {
             steps {
-                sh "docker build -t frontend_image ."
+               run_on_all(build_image)
             }
         }
         /*stage('Test') {
@@ -18,10 +35,9 @@ pipeline {
         }*/
         stage('Deploy') {
             steps {
-                sh "docker stop frontend"
-                sh "docker container rm frontend"
-                sh "docker run -d --name frontend frontend_image"
+               run_on_all(deploy_container)
             }
         }
     }
 }
+
