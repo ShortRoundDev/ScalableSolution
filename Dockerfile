@@ -13,6 +13,7 @@ COPY . .
 WORKDIR "/src/ScalableWebapp"
 RUN dotnet build "ScalableWebapp.csproj" -c Release -o /app/build
 
+
 FROM build AS publish
 RUN dotnet publish "ScalableWebapp.csproj" -c Release -o /app/publish
 

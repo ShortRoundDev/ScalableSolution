@@ -4,17 +4,18 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'ls'
+                sh "docker build -t frontend_image ."
             }
         }
-        stage('Test') {
+        /*stage('Test') {
             steps {
                 echo "Testing"
             }
-        }
+        }*/
         stage('Deploy') {
             steps {
-                echo "Deploying"
+                sh "docker container rm frontend"
+                sh "docker run -d --name frontend frontend_image"
             }
         }
     }
