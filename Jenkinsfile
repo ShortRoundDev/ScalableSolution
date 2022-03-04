@@ -7,7 +7,7 @@ def deploy_container(){
     sh "docker run -d --name frontend frontend_image"
 }
 
-def run_on_all(func){
+def run_on_all(Closure func){
     node('fe1'){
         func()
     }
@@ -25,7 +25,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-               run_on_all(build_image)
+               run_on_all(this.&build_image)
             }
         }
         /*stage('Test') {
@@ -35,7 +35,7 @@ pipeline {
         }*/
         stage('Deploy') {
             steps {
-               run_on_all(deploy_container)
+               run_on_all(this.&deploy_container)
             }
         }
     }
