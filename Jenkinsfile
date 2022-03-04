@@ -1,10 +1,10 @@
 pipeline {
-    agent any
+    agent { node { label 'frontend' } }
 
     stages {
         stage('Build') {
             steps {
-                echo "Building"
+                sh 'ls'
             }
         }
         stage('Test') {
