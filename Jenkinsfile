@@ -9,7 +9,7 @@ def build_image(){
 
 def deploy_container(){
     sh "(docker stop frontend && docker container rm frontend) || true"
-    sh "docker run -d --name frontend frontend_image"
+    sh "docker run -d --name frontend -p 80:80 -p 443:443 frontend_image"
 }
 
 def run_on_all(Closure func){
