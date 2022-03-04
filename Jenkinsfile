@@ -1,5 +1,9 @@
 pipeline {
-    agent { node { label 'frontend' } }
+    agent {
+        node('fe1')
+        node('fe2')
+        node('fe3')
+    }
 
     stages {
         stage('Build') {
@@ -14,6 +18,7 @@ pipeline {
         }*/
         stage('Deploy') {
             steps {
+                sh "docker stop frontend"
                 sh "docker container rm frontend"
                 sh "docker run -d --name frontend frontend_image"
             }
